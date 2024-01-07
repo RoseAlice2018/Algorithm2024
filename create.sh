@@ -18,6 +18,7 @@ echo "#include<vector>
 #include<stack>
 #include<queue>
 #include<string>
+#include<unordered_map>
 using namespace std;" > "${cpp_file}"
 
 #移动文件到文件夹里
