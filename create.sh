@@ -19,7 +19,14 @@ echo "#include<vector>
 #include<queue>
 #include<string>
 #include<unordered_map>
-using namespace std;" > "${cpp_file}"
+using namespace std;
+struct ListNode{
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x):val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next):val(x), next(next){}
+}" > "${cpp_file}"
 
 #移动文件到文件夹里
 if [ -e "${current_year}/${cpp_file}" ]; then  
