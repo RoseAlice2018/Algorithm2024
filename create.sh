@@ -26,7 +26,7 @@ struct ListNode{
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x):val(x), next(nullptr) {}
     ListNode(int x, ListNode *next):val(x), next(next){}
-}" > "${cpp_file}"
+};" > "${cpp_file}"
 
 #移动文件到文件夹里
 if [ -e "${current_year}/${cpp_file}" ]; then  
