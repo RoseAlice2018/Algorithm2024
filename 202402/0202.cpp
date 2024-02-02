@@ -4,6 +4,7 @@
 #include<string>
 #include<unordered_map>
 #include<unordered_set>
+#include<tuple>
 using namespace std;
 struct ListNode{
     int val;
@@ -15,47 +16,36 @@ struct ListNode{
 class Solution {
 public:
     int stoneGameVI(vector<int>& aliceValues, vector<int>& bobValues) {
-        unordered_set<int> chosen;
-        auto getmin = [](vector<int>& values, unordered_set<int>& _chosen)->int{
-            int idx = -1;
-            int max = 0;
-            for(int i = 0; i < values.size();i++)
-            {
-                if(_chosen.count(i))//skip
-                    continue;
-                if(values[i] >= max)
-                {
-                    max = values[i];
-                    idx = i;
-                }
-            }
-            return idx;
-        };
+        int n = aliceValues.size();
 
-        int A = 0, B = 0;
-        for(int i = 0; i < aliceValues.size(); i++)
+        vector<tuple<int, int, int>> values;
+        for(int i = 0; i < n; i++)
         {
-            int chose = getmin(aliceValues, chosen);
-            if(chose == -1) //done
-                break;
-            else 
-            {
-                chosen.insert(chose);
-                A += aliceValues[chose];
-            }
-            chose = getmin(bobValues, chosen);
-            if(chose == -1)
-                break;
-            else 
-            {
-                chosen.insert(chose);
-                B += bobValues[chose];
-            }
+            values.emplace_back(aliceValues[i] + bobValues[i], aliceValues[i], bobValues[i]);
         }
-        if(A > B)
+
+        sort(values.begin(), values.end(), [](tuple<int,int,int>& a,tuple<int, int, int> &b){
+            return get<0>(a) > get<0>(b);
+        });
+
+        int aliceSum = 0, bobSum = 0;
+        for(int i = 0; i < n; ++i)
+        {
+            if(i % 2 == 0)
+            {
+                aliceSum += get<1>(values[i]);
+            }
+            else 
+                bobSum += get<2>(values[i]);
+        }
+
+        if(aliceSum >bobSum)
             return 1;
-        else if(A < B)
+        else if(aliceSum == bobSum)
+            return 0;
+        else 
             return -1;
-        return 0;
+        
+        return 0;    
     }
 };
