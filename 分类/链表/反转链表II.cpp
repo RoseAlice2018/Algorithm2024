@@ -23,24 +23,10 @@ struct ListNode{
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+//迭代
+
 class Solution {
 public:
-    pair<ListNode*, ListNode*> reverse(ListNode *head, ListNode *tail)
-    {
-        pair<ListNode*, ListNode*> ret;
-        ListNode *cur = head;
-        ListNode * prev = nullptr;
-        while(cur != tail)
-        {
-            ListNode *next = cur->next;
-            cur->next = prev;
-            prev = cur;
-            cur  = next;
-        }
-        ret.first = tail;
-        ret.second = head;
-        return ret;
-    }
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         if( left == right)
             return head;
@@ -75,5 +61,52 @@ public:
         ret.second->next = after_right;
 
         
+    }
+};
+
+
+// 递归写法
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    ListNode * suffix;
+    ListNode* reverseN(ListNode *head, int n)
+    {
+        if(n == 1)
+        {
+            suffix = head->next;
+            return head;
+        }
+
+        ListNode *_next = reverseN(head->next, n-1);
+        head->next->next = head;
+        head->next = suffix;
+
+        return _next;
+    }
+
+
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+
+        if(left == 1)
+        {
+            return reverseN(head, right);
+        }
+
+        ListNode *reverse_tree =  reverseBetween(head->next, left - 1, right - 1);
+        head->next = reverse_tree;
+
+        return head;
     }
 };
