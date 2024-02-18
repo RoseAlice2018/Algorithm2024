@@ -121,7 +121,7 @@ public:
 
     void traverse(Node *left, Node *right)
     {
-        if(left == nullptr || left->right == nullptr)
+        if(left == nullptr || right == nullptr)
             return ;
         
         left->next = right;
