@@ -57,27 +57,29 @@ struct TreeNode{
  */
 class Solution {
 public:
-    TreeNode *helper(vector<int>& preorder, int p_left, int p_right, vector<int>& inorder, int i_left, int i_right)
-    {
-        if(p_left > p_right || i_left > i_right)
-            return nullptr;
-        
-        if(p_left < 0 || p_right >= preorder.size()) return nullptr;
-        if(i_left < 0 || i_right >= preorder.size()) return nullptr;
-
-        TreeNode *root = new TreeNode(preorder[p_left]);
-        auto iter = std::find(inorder.begin(), inorder.end(), root->val);
-        if(iter != inorder.end())
-        {
-            int index = std::distance(inorder.begin(), iter);
-            int left_size = index - i_left, right_size = i_right - index;
-            root->left = helper(preorder, p_left + 1, p_left + left_size, inorder, i_left, index - 1);
-            root->right = helper(preorder, p_left + left_size + 1, p_right, inorder, index + 1, i_right);
+    TreeNode *constructFromPrePost(vector<int> &preorder, vector<int> &postorder) {
+        int n = preorder.size();
+        unordered_map<int, int> postMap;
+        for (int i = 0; i < n; i++) {
+            postMap[postorder[i]] = i;
         }
-        return root;
-    }
-
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return helper(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
+        function<TreeNode *(int, int, int, int)> dfs = [&](int preLeft, int preRight, int postLeft, int postRight) -> TreeNode * {
+            if (preLeft > preRight) {
+                return nullptr;
+            }
+            int leftCount = 0;
+            if (preLeft < preRight) {
+                leftCount = postMap[preorder[preLeft + 1]] - postLeft + 1;
+            }
+            return new TreeNode(preorder[preLeft],
+                dfs(preLeft + 1, preLeft + leftCount, postLeft, postLeft + leftCount - 1),
+                dfs(preLeft + leftCount + 1, preRight, postLeft + leftCount, postRight - 1));
+        };
+        return dfs(0, n - 1, 0, n - 1);
     }
 };
+
+作者：力扣官方题解
+链接：https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal/solutions/2645281/gen-ju-qian-xu-he-hou-xu-bian-li-gou-zao-6vzt/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
