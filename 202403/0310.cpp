@@ -53,10 +53,15 @@ public:
         // 比较map
         for(auto  key : guess_map)
         {
-            if(key_map.count(key.first))
+            for(int idx = 0; idx < key.second; idx++)
             {
-                cows++;
-                key_map[key.first]--;
+                if(key_map.count(key.first))
+                {
+                    cows++;
+                    key_map[key.first]--;
+                    if(key_map[key.first] <= 0)
+                        break;
+                }
             }
         }
         return to_string(bulls) + 'A' + to_string(cows) + 'B';
