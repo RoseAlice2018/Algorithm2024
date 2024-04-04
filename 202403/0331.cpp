@@ -102,3 +102,17 @@ public:
 };
 
 
+class Solution {
+public:
+    string finalString(string s) {
+        string res;
+        for(char t : s)
+        {
+            if(t == 'i')
+                std::reverse(res.begin(), res.end());
+            else 
+                res.push_back(t);
+        }
+        return res;
+    }
+};
