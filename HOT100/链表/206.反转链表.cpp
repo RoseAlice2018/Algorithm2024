@@ -30,3 +30,103 @@ public:
         return reverse(dump, head);
     }
 };
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    pair<ListNode*, ListNode*> helper(ListNode *head)
+    {
+        if(head->next == nullptr) return {head, head};
+        pair<ListNode*, ListNode*> ret = helper(head->next);
+        ret.second->next = head;
+        return {ret.first, head};
+    }
+    ListNode* reverseList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr) return head;
+        pair<ListNode*, ListNode*> ret = helper(head->next);
+        ret.second->next = head;
+        return ret.first;
+    }
+};
+
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        while(cur)
+        {
+            ListNode *next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+};
+
+
+
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+       if(!head || !head->next) return head;
+       ListNode *newHead = reverseList(head->next);
+       head->next->next = head;
+       head->next = nullptr;
+       return newHead; 
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

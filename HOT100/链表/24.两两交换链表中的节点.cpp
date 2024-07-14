@@ -27,3 +27,22 @@ public:
         return second;
     }
 };
+
+
+
+
+
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head == nullptr || head->next == nullptr) return head;
+        ListNode *pre = head;
+        ListNode *cur = head->next;
+        ListNode *next = head->next->next;
+        //switch 2
+        cur->next = pre;
+        pre->next = swapPairs(next);
+        return cur;
+    }
+};

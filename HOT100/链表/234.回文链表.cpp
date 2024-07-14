@@ -30,3 +30,40 @@ public:
     }
 };
 
+
+
+
+class Solution {
+public:
+    ListNode *reverseList(ListNode *head)
+    {
+        if(!head || !head->next) return head;
+        ListNode *newhead = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return newhead;
+    }
+    bool isPalindrome(ListNode* head) {
+        if(!head) return false;
+        if(!head->next) return true;
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while(fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        ListNode *compare;
+        if(fast == nullptr) compare = reverseList(slow);
+        else compare = reverseList(slow->next);
+
+        while(head && compare)
+        {
+            if(head->val != compare->val)
+                return false;
+            head = head->next;
+            compare = compare->next;
+        }
+        return true;
+    }
+};
