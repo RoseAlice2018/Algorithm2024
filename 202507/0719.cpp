@@ -60,3 +60,53 @@ public:
         return head->next;
     }
 };
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if(n == 1)
+        {
+            return s;
+        }
+        else if(n == 2)
+        {
+            return (s[0] == s[1]) ? s : string(1, s[0]);
+        }
+        vector<vector<bool>> dp(n, vector<bool>(n, 0));
+        int max_len = 1;
+        int ans_l = 0, ans_r = 0;
+
+        for(int i = 0 ; i < n; i++)
+            dp[i][i] = 1;
+        
+        for(int Len = 2; Len <= n; Len++)
+        {
+            for(int i = 0; i < n; i++)
+            {
+                int j = i + Len - 1;
+                if(j >= n)
+                    break;
+                if(s[i] == s[j])
+                {
+                    if(j - i < 3)
+                        dp[i][j] = 1;
+                    else{
+                        dp[i][j] = dp[i+1][j-1];
+                    }
+                    if(dp[i][j] && Len > max_len)
+                    {
+                        ans_l = i;
+                        ans_r = j;
+                        max_len = Len;
+                    } 
+                }
+                else{
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        std::cout<<max_len<<"  "<<ans_l<<endl;
+        return s.substr(ans_l, max_len);
+    }
+};
