@@ -55,3 +55,35 @@ public:
         return ans;
     }
 };
+
+// 更快的解法 核心在于减少拷贝的消耗
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(!root)
+            return ans;
+        queue<TreeNode*> layer;
+        layer.push(root);
+
+        while(!layer.empty())
+        {
+            int size = layer.size();
+            vector<int> layer_ans;
+            layer_ans.reserve(size);
+
+            for(int i = 0; i < size; i++)
+            {
+                TreeNode *f = layer.front();
+                layer.pop();
+                layer_ans.emplace_back(f->val);
+                if(f->left)
+                    layer.push(f->left);
+                if(f->right)
+                    layer.push(f->right);
+            }
+            ans.emplace_back(std::move(layer_ans));
+        }
+        return ans;
+    }
+};
