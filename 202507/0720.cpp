@@ -134,3 +134,48 @@ public:
         return deepsearch(nums, target, 0, nums.size() - 1);
     }
 };
+
+class Solution {
+public:
+    int deepsearch(vector<int> &nums, int target, int left, int right)
+    {
+        if(left >= right)
+        {
+            if(nums[left] == target)
+            {
+                return left;
+            }
+            return -1;
+        }
+        int mid = (left + right) / 2;
+        if(nums[mid] == target)
+            return mid;
+        if(nums[left] <= nums[mid])
+        {
+            // left in order
+            if(target <= nums[mid] && target >= nums[left])
+            {
+                return deepsearch(nums, target, left, mid - 1);
+            }
+            else{
+                return deepsearch(nums, target, mid + 1, right);
+            }
+        }
+        else if(nums[mid] <= nums[right])
+        {
+            //right in order
+            if(target >= nums[mid] && target <= nums[right])
+            {
+                return deepsearch(nums, target, mid + 1, right);
+            }
+            else{
+                return deepsearch(nums, target, left, mid - 1);
+            }
+        }
+        return -1;
+    }
+
+    int search(vector<int>& nums, int target) {
+        return deepsearch(nums, target, 0, nums.size() - 1);
+    }
+};
