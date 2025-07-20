@@ -87,3 +87,50 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    int deepsearch(vector<int>& nums, int target, int left, int right)
+    {
+        std::cout<<left<<" "<<right<<std::endl;
+        if(left >= right)
+        {
+            if(nums[left] == target)
+            {
+                return left;
+            }
+            return -1;
+        }
+        int mid = (left + right) / 2;
+        if(nums[mid] == target)
+            return mid;
+
+        if(target < nums[mid])
+        {
+            if(nums[mid] > nums[right]){
+                return deepsearch(nums, target, mid + 1, right);
+            }
+            else{
+                return deepsearch(nums, target, left, mid - 1);
+            }
+        } 
+        else{
+            if(target > nums[right])
+            {
+                if(nums[mid] >= nums[left])
+                    return deepsearch(nums, target, mid + 1, right);
+                else{
+                    return deepsearch(nums, target, left, mid - 1);
+                }
+            }
+            else {
+                return deepsearch(nums, target, mid + 1, right);
+            }
+        }
+    }
+
+    int search(vector<int>& nums, int target) {
+        return deepsearch(nums, target, 0, nums.size() - 1);
+    }
+};
