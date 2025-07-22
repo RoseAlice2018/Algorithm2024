@@ -85,3 +85,27 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    void backtrace(vector<vector<int>>& ans, vector<int>& nums, int index)
+    {
+        if(index == nums.size())
+        {
+            ans.emplace_back(nums);
+        }
+
+        for(int i = index; i < nums.size(); i++)
+        {
+            swap(nums[index], nums[i]);
+            backtrace(ans, nums, index + 1);
+            swap(nums[index], nums[i]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        backtrace(ans, nums, 0);
+        return ans;
+    }
+};
