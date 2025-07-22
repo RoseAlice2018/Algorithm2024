@@ -54,3 +54,34 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    void dfs(vector<int>& nums, unordered_set<int>& visited, vector<int> path, vector<vector<int>> &ans)
+    {
+        if(visited.size() == nums.size())
+        {
+            ans.push_back(std::move(path));
+            return;
+        }
+        for(int i = 0 ; i < nums.size(); i++)
+        {
+            if(!visited.count(nums[i]))
+            {
+                path.push_back(nums[i]);
+                visited.insert(nums[i]);
+                dfs(nums, visited, path, ans);
+                visited.erase(nums[i]);
+                path.pop_back();
+            }
+        }
+        return;
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> path;
+        unordered_set<int> visited;
+        dfs(nums, visited, path, ans);
+        return ans;
+    }
+};
