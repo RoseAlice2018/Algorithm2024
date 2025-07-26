@@ -85,3 +85,24 @@ public:
         return ret;      
     }
 };
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode *first = head;
+        if(!head) return false;
+        ListNode *second = head->next;
+        while(first&&second)
+        {
+            if(first == second)
+                return true;
+            first = first->next;
+            if(second->next)
+                second = second->next->next;
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
+};
