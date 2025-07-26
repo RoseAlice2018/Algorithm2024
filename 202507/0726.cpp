@@ -55,3 +55,33 @@ public:
         return left ? left : right;    
     }
 };
+
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        queue<TreeNode*> layer;
+        vector<vector<int>> ret;
+        if(!root) return ret;
+        layer.push(root);
+        int _r = 0;
+        while(!layer.empty())
+        {
+            vector<int> tmp;
+            int size = layer.size();
+            for(int i = 0; i < size; i++)
+            {
+                TreeNode *f = layer.front();
+                layer.pop();
+                tmp.push_back(f->val);
+                if(f->left) layer.push(f->left);
+                if(f->right) layer.push(f->right);
+            }
+            if(_r)
+                reverse(tmp.begin(), tmp.end());
+            _r = !_r;
+            ret.push_back(std::move(tmp));
+        }
+        return ret;      
+    }
+};
