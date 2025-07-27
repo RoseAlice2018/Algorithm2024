@@ -62,3 +62,50 @@ public:
         return ret;
     }
 };
+
+
+
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int m = num1.size() - 1;
+        int n = num2.size() - 1;
+        int carry = 0;
+        string ans;
+        while(m >= 0 && n >= 0)
+        {
+            int number1 = num1[m] - '0';
+            int number2 = num2[n] - '0';
+            int add = number1 + number2 + carry;
+            int tmp = add % 10;
+            ans.push_back(tmp + '0');
+            carry = (add < 10) ? 0 : 1;
+            m--;
+            n--;
+        }
+
+        while(m>=0)
+        {
+            int num = num1[m] - '0' + carry;
+            int tmp = num % 10;
+            ans.push_back(tmp + '0');
+            carry = (num < 10) ? 0 : 1;
+            m--;
+        }
+        while(n>=0)
+        {
+            int num = num2[n] - '0' + carry;
+            int tmp = num % 10;
+            ans.push_back(tmp + '0');
+            carry = (num < 10) ? 0 : 1;
+            n--;
+        }
+        if(carry)
+        {
+            ans.push_back('1');
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
