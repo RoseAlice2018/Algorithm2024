@@ -21,3 +21,19 @@ struct TreeNode{
     TreeNode(int x):val(x), left(nullptr), right(nullptr){}
     TreeNode(int x, TreeNode *left, TreeNode *right):val(x), left(left), right(right){}
 };
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA == nullptr || headB == nullptr)
+            return nullptr;
+        ListNode *curA = headA;
+        ListNode *curB = headB;
+        while(curA != curB)
+        {
+            curA = (curA == nullptr) ? headB : curA->next;
+            curB = (curB == nullptr) ? headA : curB->next;
+        }
+        return curA;
+    }
+};
