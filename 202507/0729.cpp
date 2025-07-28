@@ -62,3 +62,26 @@ public:
         return dp[m][n];
     }
 };
+
+class Solution {
+public:
+    int maxSum = INT_MIN;
+    
+    int maxGain(TreeNode *node)
+    {
+        if(node == nullptr)
+            return 0;
+        
+        int leftGain = max(maxGain(node->left), 0);
+        int rightGain = max(maxGain(node->right), 0);
+
+        int priceNewPath = node->val + leftGain + rightGain;
+        maxSum = max(priceNewPath, maxSum);
+
+        return node->val + max(leftGain, rightGain);
+    }
+    int maxPathSum(TreeNode* root) {
+        maxGain(root);
+        return maxSum;
+    }
+};
