@@ -78,3 +78,65 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode *slow = head;
+        ListNode *fast = head;
+        if(head == NULL || fast == NULL) return head;
+        while(true)
+        {
+            slow = slow->next;
+            if(slow == NULL)
+                return slow;
+            if(fast == NULL || fast->next == NULL)
+                return NULL;
+            fast = fast->next->next;
+            if(fast == slow)
+                break;
+        }
+        ListNode *begin = head;
+        while(slow != begin)
+        {
+            slow = slow->next;
+            begin = begin->next;
+        }
+        return slow;
+    }
+};
+
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode *dummy = new ListNode(-1000);
+        dummy->next = head;
+        if(!head || !head->next)
+            return head;
+        ListNode *pre = dummy;
+        ListNode *cur = head;
+        while(cur)
+        {
+            ListNode *_next = cur->next;
+            if(!_next) 
+                break;
+            if(cur->val == _next->val)
+            {
+                while(_next->val == cur->val)
+                {
+                    _next = _next->next;
+                    if(!_next)
+                        break;
+                }
+                pre->next = _next;
+                cur = _next;
+            }
+            else{
+                pre = cur;
+                cur = _next;
+            }
+        }
+        return dummy->next;
+    }
+};
