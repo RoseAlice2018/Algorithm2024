@@ -74,3 +74,21 @@ public:
         return ret; 
     }
 };
+
+
+class Solution {
+public:
+    void _inorderTraversal(TreeNode *root, vector<int>& ret)
+    {
+        if(root == nullptr)
+            return;
+        _inorderTraversal(root->left, ret);
+        ret.push_back(root->val);
+        _inorderTraversal(root->right, ret);
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ret;
+        _inorderTraversal(root, ret);
+        return ret;
+    }
+};
