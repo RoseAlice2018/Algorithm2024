@@ -43,3 +43,34 @@ public:
         return head;
     }
 };
+
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> ret;
+        if(root == nullptr)
+            return ret;
+
+        queue<TreeNode*> layer;
+        layer.push(root);
+        while(!layer.empty())
+        {
+            int len = layer.size();
+            for(int i = 0; i < len;i++)
+            {
+                TreeNode *tmp = layer.front();
+                if(i == len - 1)
+                {
+                    ret.push_back(tmp->val);
+                }
+                if(tmp->left)
+                    layer.push(tmp->left);
+                if(tmp->right)
+                    layer.push(tmp->right);
+                layer.pop();
+            }
+        }
+
+        return ret; 
+    }
+};
