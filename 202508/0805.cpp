@@ -45,3 +45,29 @@ public:
        return binary_search(nums, target, 0, nums.size() - 1); 
     }
 };
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        while(left <= right)
+        {
+            int mid = (right + left) / 2;
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+            else if(nums[mid] < target)
+            {
+                left = mid + 1;
+                continue;
+            }
+            else{
+                right = mid - 1;
+                continue;
+            }
+        }
+        return -1;
+    }
+};
