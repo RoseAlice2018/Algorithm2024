@@ -161,3 +161,48 @@ public:
 		return 0;
 	}
 };
+class MyQueue {
+private:
+    stack<int> s1;
+    stack<int> s2;
+public:
+    MyQueue() {
+        
+    }
+    
+    void push(int x) {
+        s1.push(x);
+    }
+    
+    int pop() {
+        if(s2.empty())
+        {
+            while(!s1.empty())
+            {
+                s2.push(s1.top());
+                s1.pop();
+            }
+        }
+        int ret = s2.top();
+        s2.pop();
+        return ret;
+    }
+    
+    int peek() {
+        if(s2.empty())
+        {
+            while(!s1.empty())
+            {
+                s2.push(s1.top());
+                s1.pop();
+            }
+        }
+        return s2.top();
+    }
+    
+    bool empty() {
+        if(s2.empty() && s1.empty())
+            return true;
+        return false;
+    }
+};
