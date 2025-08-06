@@ -114,3 +114,79 @@ public:
     }
 };
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int flag = 0;
+        if(l1 == nullptr) return l2;
+        if(l2 == nullptr) return l1;
+        ListNode *dummy = new ListNode(-1);
+        ListNode *cur = dummy;
+        while(l1 && l2)
+        {
+            int tmp = l1->val + l2->val + flag;
+            if(tmp >= 10)
+            {
+                tmp = tmp % 10;
+                flag = 1;
+            }
+            else{
+                flag = 0;
+            }
+            l1->val = tmp;
+            cur->next = l1;
+            l1 = l1->next;
+            l2 = l2->next;
+            cur = cur->next;
+        }
+        while(l1)
+        {
+            int tmp = l1->val + flag;
+            if(tmp >= 10)
+            {
+                tmp = tmp % 10;
+                flag = 1;
+            }
+            else{
+                flag = 0;
+            }
+            l1->val = tmp;
+            cur->next = l1;
+            l1 = l1->next;
+            cur = cur->next;
+        }
+        while(l2)
+        {
+            int tmp = l2->val + flag;
+            if(tmp >= 10)
+            {
+                tmp = tmp % 10;
+                flag = 1;
+            }
+            else{
+                flag = 0;
+            }
+            l2->val = tmp;
+            cur->next = l2;
+            l2 = l2->next;
+            cur = cur->next;
+        }
+        if(flag)
+        {
+            ListNode *nn = new ListNode(flag);
+            cur->next = nn;
+            cur = cur->next;
+        }
+        return dummy->next;
+    }
+};
