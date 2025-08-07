@@ -71,3 +71,61 @@ public:
         return _buildTree(preorder, inorder, 0, 0, inorder.size() - 1);
     }
 };
+
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        vector<string> words;
+        int getting_word = 0;
+        string tmp;
+        for(int i = 0; i < s.size(); i++)
+        {
+            if(s[i] == ' ')
+            {
+                getting_word = 0;
+                if(tmp.size())
+                    words.push_back(tmp);
+                tmp.clear();
+                continue;
+            }
+            else{
+                tmp.push_back(s[i]);
+            }
+        }
+        if(tmp.size()) words.push_back(tmp);
+        reverse(words.begin(), words.end());
+        string ret;
+        for(int i = 0; i < words.size(); i++)
+        {
+            ret.append(words[i]);
+            if(i < words.size() - 1)
+                ret.push_back(' ');
+        }
+        return ret;
+    }
+};
+
+class Solution {
+public:
+    void backtrace(vector<int> &nums, vector<vector<int>> &ans, vector<int>& path, int index)
+    {
+        if(index == nums.size())
+        {
+            ans.push_back(path);
+            return;
+        }
+
+        //choose
+        path.push_back(nums[index]);
+        backtrace(nums, ans, path, index+1);
+        path.pop_back();
+        backtrace(nums, ans, path, index+1);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ret;
+        vector<int> path;
+        backtrace(nums, ret, path, 0);
+        return ret;
+    }
+};
