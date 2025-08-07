@@ -166,3 +166,19 @@ public:
         return Max_depth;
     }
 };
+
+
+class Solution {
+public:
+    bool _isSymmetric(TreeNode *left, TreeNode *right)
+    {
+        if((left == nullptr && right != nullptr)||(left != nullptr && right == nullptr)) return false;
+        if(left == nullptr && right == nullptr) return true;
+        if(left->val != right->val) return false;
+        return _isSymmetric(left->left, right->right) && _isSymmetric(left->right, right->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root == nullptr) return true;
+        return _isSymmetric(root->left, root->right);
+    }
+};
