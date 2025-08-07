@@ -149,3 +149,20 @@ public:
     }
 };
 
+class Solution {
+public:
+    int Max_depth = 0;
+    void dfs(TreeNode *root, int depth)
+    {
+        depth++;
+        if(depth >Max_depth) Max_depth = depth;
+        if(root->left) dfs(root->left, depth);
+        if(root->right) dfs(root->right, depth);
+    }
+    int maxDepth(TreeNode* root) {
+        int depth = 0;
+        if(root == nullptr) return 0;
+        dfs(root, depth);
+        return Max_depth;
+    }
+};
