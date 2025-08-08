@@ -55,3 +55,52 @@ public:
         return ret;
     }
 };
+
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<char> _stack;
+        for(auto c : s)
+        {
+            if(c == ']')
+            {
+                string tmp;
+                while(_stack.top() != '[')
+                {
+                    tmp.push_back(_stack.top());
+                    _stack.pop();
+                }
+                _stack.pop();
+                int num = 0;
+                string num_s;
+                while(!_stack.empty() && isdigit(_stack.top()))
+                {
+                    num_s.push_back(_stack.top());
+                    _stack.pop();
+                }
+                for(int i = num_s.size() - 1; i >= 0; i--)
+                {
+                    num = num * 10 + num_s[i] - '0';
+                }
+                num = (num == 0) ? 1 : num;
+                cout<<num<<endl;
+                for(int i = 0; i < num; i++)
+                {
+                    for(int j = tmp.size() - 1; j >= 0; j--)
+                        _stack.push(tmp[j]);
+                }
+            }
+            else{
+                _stack.push(c);
+            }
+        }
+        string ret;
+        while(!_stack.empty())
+        {
+            ret.push_back(_stack.top());
+            _stack.pop();
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
