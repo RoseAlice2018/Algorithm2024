@@ -100,3 +100,25 @@ public:
         }
     }
 };
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int beigin_x = 0, beigin_y = n - 1;
+        while(beigin_x >= 0 && beigin_x < m && beigin_y >= 0 && beigin_y < n)
+        {
+            if(target == matrix[beigin_x][beigin_y])
+                return true;
+            if(target > matrix[beigin_x][beigin_y])
+            {
+                beigin_x++;
+            }
+            else {
+                beigin_y--;
+            }
+        }
+        return false;
+    }
+};
