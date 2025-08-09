@@ -167,3 +167,38 @@ public:
 链接：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/solutions/476791/mai-mai-gu-piao-de-zui-jia-shi-ji-ii-by-leetcode-s/
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+class Solution {
+public:
+    void dfs(vector<vector<int>> &grid, int x, int y, int& count)
+    {
+        if(x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size())
+            return;
+        if(grid[x][y] == 2 || grid[x][y] == 0)
+            return;
+        count++;
+        grid[x][y] = 2;
+        dfs(grid, x-1, y, count);
+        dfs(grid, x, y+1, count);
+        dfs(grid, x+1, y, count);
+        dfs(grid, x, y-1, count);
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int max_count = 0;
+        for(int i = 0; i < grid.size(); i++)
+        {
+            for(int j = 0; j < grid[0].size(); j++)
+            {
+                if(grid[i][j] == 1)
+                {
+                    int ans = 0;
+                    dfs(grid, i, j, ans);
+                    if(ans > max_count)
+                        max_count = ans;
+                }
+            }
+        }
+        return max_count;
+    }
+};
