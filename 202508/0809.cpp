@@ -122,3 +122,28 @@ public:
         return false;
     }
 };
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<int>> dp(n+1, vector<int>(3, 0));
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        dp[0][2] = 0;
+        int max_dp_j_0 = dp[0][0];
+        int max_dp_j_1 = dp[0][1];
+        int max_dp_j_2 = dp[0][2];
+        for(int i = 1; i < n ;i++)
+        {
+            dp[i][0] = max(max_dp_j_0, max_dp_j_2);
+            dp[i][1] = max(max_dp_j_0, max_dp_j_2) - prices[i];
+            for(int j = 0; j < i; j++)
+                dp[i][2] = max(dp[i][2], prices[i] + dp[j][1]);
+            max_dp_j_0 = max(max_dp_j_0, dp[i][0]);
+            max_dp_j_2 = max(dp[i][2], max_dp_j_2);
+            cout<<dp[i][0]<<" "<<dp[i][1]<<" "<<dp[i][2]<<endl;
+        }
+        return max(dp[n - 1][0], dp[n-1][2]);
+    }
+};
