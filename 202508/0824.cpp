@@ -95,3 +95,45 @@ public:
         return dummy->next;
     }
 };
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int zero_index = -1;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i] != 0 && zero_index == -1)
+                continue;
+            if(nums[i] == 0 && zero_index == -1)
+            {
+                zero_index = i;
+                continue;
+            }
+            if(nums[i] != 0 && zero_index != -1)
+            {
+                swap(nums[i], nums[zero_index]);
+                zero_index++;
+            }
+        }   
+        return;
+    }
+};
+class Solution {
+public:
+    int findLength(vector<int>& A, vector<int>& B) {
+        int n = A.size(), m = B.size();
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+        int ans = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                dp[i][j] = A[i] == B[j] ? dp[i + 1][j + 1] + 1 : 0;
+                ans = max(ans, dp[i][j]);
+            }
+        }
+        return ans;
+    }
+};
+
+作者：力扣官方题解
+链接：https://leetcode.cn/problems/maximum-length-of-repeated-subarray/solutions/310099/zui-chang-zhong-fu-zi-shu-zu-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
