@@ -44,3 +44,25 @@ public:
         return valid_index;
     }
 };
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int begin_x = 0, begin_y = n - 1;
+        while(begin_x>=0 && begin_x < m && begin_y >= 0 && begin_y < n)
+        {
+            if(matrix[begin_x][begin_y] == target)
+                return true;
+            else if(matrix[begin_x][begin_y] > target)
+            {
+                begin_y--;
+            }
+            else{
+                begin_x++;
+            }
+        }
+        return false;
+    }
+};
