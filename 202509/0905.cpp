@@ -83,3 +83,44 @@ public:
         return ans;
     }
 };
+
+
+
+class Solution {
+public:
+    int partition(vector<int> &nums, int left, int right)
+    {
+        int pivot = nums[right];
+        int i = left - 1;
+        for(int j = left; j <= right - 1; ++j)
+        {
+            if(nums[j] < pivot)
+            {
+                i = i + 1;
+                swap(nums[i], nums[j]);   
+            }
+        }
+        swap(nums[i+1], nums[right]);
+        return i+1;
+    }
+
+    int randomized_partition(vector<int>& nums, int l, int r) {
+        int i = rand() % (r - l + 1) + l; // 随机选一个作为我们的主元
+        swap(nums[r], nums[i]);
+        return partition(nums, l, r);
+    }
+
+    void randomized_quicksort(vector<int>& nums, int left, int right)
+    {
+        if(left < right)
+        {
+            int pos = randomized_partition(nums, left, right);
+            randomized_quicksort(nums, left, pos - 1);
+            randomized_quicksort(nums, pos + 1, right);
+        }
+    }
+    vector<int> sortArray(vector<int>& nums) {
+        randomized_quicksort(nums, 0, nums.size() - 1);
+        return nums;
+    }
+};
