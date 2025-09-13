@@ -233,6 +233,47 @@ public:
     }
 };
 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int ret = INT_MIN;
+    int dfs(TreeNode *root)
+    {
+        if(root->left == nullptr && root->right == nullptr)
+        {
+            ret = max(root->val, ret);
+            return max(root->val, 0);
+        }
+
+        int left = 0;
+        if(root->left)
+        {
+            left = dfs(root->left);
+        }
+        int right = (root->right == nullptr) ? 0 : dfs(root->right);
+
+        int ans = max(left, 0) + max(right, 0) + root->val;
+        ret = max(ans, ret);
+        return max(max(left , right) + root->val, 0);
+    }
+
+    int maxPathSum(TreeNode* root) {
+        if(root == nullptr) return 0;
+        dfs(root);
+        return ret;
+    }
+};
+
 
 
 
