@@ -160,7 +160,78 @@ public:
 };
 
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *findmid(ListNode *head)
+    {
+        ListNode *slow = head;
+        ListNode *fast = head->next->next;
+        while(fast != nullptr)
+        {
+            slow = slow->next;
+            if(fast->next == nullptr) break;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
 
+    ListNode *reverse(ListNode *head)
+    {
+        ListNode *cur = head;
+        ListNode *pre = nullptr;
+        while(cur != nullptr)
+        {
+            ListNode *next = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
+    ListNode *merge(ListNode *A, ListNode *B)
+    {
+        ListNode *cur = A;
+        ListNode *next = B;
+        while(cur!= nullptr && next != nullptr)
+        {
+            ListNode *tmp_A = cur->next;
+            ListNode *tmp_B = next->next;
+
+            cur->next = next;
+            next->next = tmp_A;
+            cur = tmp_A;
+            next = tmp_B;
+        }
+        return A;
+    }
+
+    void reorderList(ListNode* head) {
+        if(head == nullptr || head->next == nullptr)
+            return ;
+        
+        // find mid
+        ListNode *mid = findmid(head);
+        cout<<"mid"<<mid->val<<endl;
+
+        // reverse
+        ListNode *new_head = reverse(mid);
+        cout<<"new_head"<<new_head->val<<endl;
+        cout<<"head"<<head->val<<endl;
+        //merge
+        merge(head, new_head);
+    }
+};
 
 
 
