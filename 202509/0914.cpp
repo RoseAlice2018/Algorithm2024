@@ -204,3 +204,29 @@ public:
         return dp[amount];
     }
 };
+
+
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int num_size = nums.size();
+        if(num_size == 1)
+        int left = num_size - 1;
+        for(int i = num_size - 2; i >= 0; i--)
+        {
+            if(nums[i] >= nums[i+1])
+                continue;
+            //find nums[i] < nums[i+1]
+            for(int j = num_size - 1; j >= i+1; j--)
+            {
+                if(nums[i] < nums[j])
+                {
+                    swap(nums[i], nums[j]);
+                    reverse(nums.begin()+i+1, nums.end());
+                    return;
+                }
+            }
+        }
+        reverse(nums.begin(), nums.end());
+    }
+};
