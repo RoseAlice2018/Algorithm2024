@@ -101,3 +101,83 @@ public:
         return head.next;
     }
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        return sortList(head, nullptr);
+    }
+
+    ListNode *sortList(ListNode *head, ListNode *tail)
+    {
+        if(head == nullptr)
+        {
+            return head;
+        }
+        if(head->next == tail)
+        {
+            head->next = nullptr;
+            return head;
+        }
+
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while(fast != tail)
+        {
+            if(fast->next == tail)
+                break;
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        ListNode *mid = slow;
+        return merge(sortList(head, mid), sortList(mid, tail));
+    }
+
+    ListNode *merge(ListNode *A, ListNode *B)
+    {
+        ListNode *dummy_head = new ListNode(-1);
+        ListNode *cur = dummy_head;
+        ListNode *temp1 = A, *temp2 = B;
+        while(temp1!= nullptr && temp2 != nullptr)
+        {
+            if(temp1->val < temp2->val)
+            {
+                cur->next = temp1;
+                cur = cur->next;
+                temp1 = temp1->next;
+            }
+            else{
+                cur->next = temp2;
+                cur = cur->next;
+                temp2 = temp2->next;
+            }
+        }
+
+        while(temp1)
+        {
+            cur->next = temp1;
+            cur = cur->next;
+            temp1 = temp1->next;
+        }
+
+        while(temp2)
+        {
+            cur->next = temp2;
+            cur = cur->next;
+            temp2 = temp2->next;
+        }
+
+        return dummy_head->next;
+    }
+};
