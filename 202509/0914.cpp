@@ -263,3 +263,63 @@ public:
         return ret;
     }
 };
+
+class Solution {
+public:
+    bool fill(unordered_map<char, int> s, unordered_map<char, int> t)
+    {
+        for(auto key : t)
+        {
+            if(s.find(key.first) == s.end())
+                return false;
+            if(s[key.first] < key.second)
+                return false;
+        }
+        return true;
+    }
+    string minWindow(string s, string t) {
+        unordered_map<char, int> t_table;
+        for(auto c : t)
+        {
+            if(t_table.find(c)!= t_table.end())
+                t_table[c]++;
+            else{
+                t_table[c] = 1;
+            }
+        }
+        
+        unordered_map<char, int> s_table;
+        int left = 0,right = 0;
+            while(!fill(s_table, t_table) && right < s.size())
+            {
+                if(s_table.find(s[right])!=s_table.end())
+                {
+                    s_table[s[right]]++;
+                }
+                else{
+                    s_table[s[right]] = 1;
+                }
+                right++;
+            }
+            if(fill(s_table, t_table))
+            {
+                int i = left;
+                for(; i < s.size(); i++)
+                {
+                    char tmp = s[i];
+                    
+                    s_table[tmp]-=1;
+                    if(fill(s_table, t_table))
+                        continue;
+                    else{
+                        break;
+                    }
+                }
+                left = max(i-1, 0);
+                return s.substr(left, right);
+            }
+            else{
+                return "";
+            }
+    }
+};
