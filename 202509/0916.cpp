@@ -79,3 +79,63 @@ public:
         return longest_streak;
     }
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int height(TreeNode *root)
+    {
+        if(root == nullptr) return 0;
+
+        int left_height = height(root->left);
+        int right_height = height(root->right);
+
+        if(abs(left_height - right_height) > 1 || left_height == -1|| right_height == -1) return -1;
+        return max(left_height, right_height) + 1;
+    }
+    bool isBalanced(TreeNode* root) {
+        return height(root) >= 0;
+    }
+};
+
+class Solution {
+public:
+    void backtrace(vector<int>& candidates, int index, int target, vector<vector<int>>& ret, vector<int>& path)
+    {
+        if(index >= candidates.size())
+            return;
+        if(target == 0)
+        {
+            ret.push_back(path);
+            return;
+        }
+
+        // skip
+        backtrace(candidates, index+1, target, ret, path);
+
+        // chooose
+        if(target >= candidates[index])
+        {
+            path.push_back(candidates[index]);
+            backtrace(candidates, index, target - candidates[index], ret, path);
+            path.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ret;
+        vector<int> path;
+        backtrace(candidates, 0, target, ret, path);
+        return ret;
+    }
+};
