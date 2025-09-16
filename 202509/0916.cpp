@@ -187,3 +187,37 @@ public:
  * int param_3 = obj->top();
  * int param_4 = obj->getMin();
  */
+
+
+ class Solution {
+public:
+    int left_index;
+    int right_index;
+    void binarysearch(vector<int>& nums, int target, int left, int right)
+    {
+        if(left > right) return ;
+        int mid = (left + right) / 2;
+        if(nums[mid] == target){
+            // find it
+            if(mid < left_index) left_index = mid;
+            if(mid > right_index) right_index = mid;
+            binarysearch(nums, target, left, mid - 1);
+            binarysearch(nums, target, mid + 1, right);
+        }
+        else if(nums[mid] > target)
+        {
+            binarysearch(nums, target, left, mid - 1);
+        }
+        else {
+            binarysearch(nums, target, mid + 1, right);
+        }
+        return;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        left_index = INT_MAX;
+        right_index = INT_MIN;
+        binarysearch(nums, target, 0, nums.size() - 1);
+        if(left_index == INT_MAX) return {-1, -1};
+        return {left_index, right_index};
+    }
+};
