@@ -54,3 +54,28 @@ public:
         return ret*ret;
     }
 };
+
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        unordered_set<int> num_set(nums.begin(), nums.end()); // 一次性初始化哈希集合
+        int longest_streak = 0;
+
+        for (int num : num_set) { // 遍历哈希集合，避免原数组重复值的影响
+            // 只有当num是序列起点时（即num-1不存在），才进入内部循环统计
+            if (num_set.find(num - 1) == num_set.end()) {
+                int current_num = num;
+                int current_streak = 1;
+
+                while (num_set.find(current_num + 1) != num_set.end()) {
+                    current_num++;
+                    current_streak++;
+                }
+                longest_streak = max(longest_streak, current_streak);
+            }
+        }
+        return longest_streak;
+    }
+};
