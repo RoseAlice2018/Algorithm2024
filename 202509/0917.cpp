@@ -181,6 +181,27 @@ public:
 
 
 
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int consistent = nums[0];
+        int times = 1;
+
+        for(int i = 1; i < nums.size(); i++)
+        {
+            if(consistent == nums[i]) times++;
+            else{
+                if(times == 0) consistent = nums[i];
+                else{
+                    times--;
+                }
+            }
+        }
+        return consistent;
+    }
+};
+
+
 
 
 
