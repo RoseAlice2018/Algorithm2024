@@ -158,6 +158,28 @@ public:
 
 
 
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int ret = 0;
+        if(nums.size() == 0) return 0;
+
+        vector<vector<int>> dp(nums.size()+1, vector<int>(2, 0));
+        dp[0][0] = 0;
+        dp[0][1] = nums[0];
+        ret = nums[0];
+        for(int i = 1; i < nums.size(); i++)
+        {
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]);
+            dp[i][1] = dp[i-1][0] + nums[i];
+            ret = max(dp[i][0], max(ret, dp[i][1]));
+        }
+
+        return ret;
+    }
+};
+
+
 
 
 
