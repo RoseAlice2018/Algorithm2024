@@ -60,3 +60,45 @@ public:
         return ret;
     }
 };
+
+
+
+class Solution {
+public:
+    string largestNumber(vector<int> &nums) {
+        sort(nums.begin(), nums.end(), [](const int &x, const int &y) {
+            return to_string(x) + to_string(y) > to_string(y) + to_string(x);
+        });
+        if (nums[0] == 0) {
+            return "0";
+        }
+        string ret;
+        for (int &x : nums) {
+            ret += to_string(x);
+        }
+        return ret;
+    }
+};
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> mp;
+
+        mp[0] = 1;
+        int count = 0, pre = 0;
+
+        for(auto& num : nums)
+        {
+            pre += num;
+
+            if(mp.find(pre - k) != mp.end())
+            {
+                count += mp[pre - k];
+            }
+            mp[pre]++;
+        }
+        
+        return count;
+    }
+};
