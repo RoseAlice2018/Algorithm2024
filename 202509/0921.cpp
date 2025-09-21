@@ -1,4 +1,37 @@
-#include<vector>
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    unordered_map<Node*, Node*> cached_node;
+    Node* copyRandomList(Node* head) {
+        if(head == nullptr) return nullptr;
+
+        if(!cached_node.count(head))
+        {
+            Node *new_head = new Node(head->val);
+            cached_node[head] = new_head;
+            
+            new_head->next = copyRandomList(head->next);
+            new_head->random = copyRandomList(head->random);
+        }
+        return cached_node[head];
+    }
+};#include<vector>
 #include<stack>
 #include<queue>
 #include<string>
